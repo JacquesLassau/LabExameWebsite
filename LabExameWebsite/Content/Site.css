@@ -1,0 +1,164 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html, body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: 'Numans', sans-serif;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: 'Numans', sans-serif;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea,
+button {
+    max-width: 280px;
+    font-family: 'Numans', sans-serif;
+}
+
+label,
+legend,
+text {
+    font-family: 'Numans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Numans', sans-serif;
+}
+
+p {
+    font-family: 'Numans', sans-serif;
+}
+
+/* Modificações Customizadas no Projeto */
+
+.error {
+    margin-top: -100px;
+    width: 100%;
+    height: 50px;
+    background-color: #337AB7;
+}
+
+.navbar-inverse {
+    background-color: #337AB7;
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #dee;
+        font-size: 1.1em;
+    }
+
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: #fff;
+        }
+
+.btn {
+    max-width: 280px;
+    font-family: 'Numans', sans-serif;
+}
+
+.btnsViewDelete {
+    width: 280px;
+}
+
+#dropdownListarExames {
+    display: none;
+}
+
+.btn-search {
+    margin-left: -30px;
+    background-color: rgb(238,238,238);
+    border-color: rgb(204,204,204);
+}
+
+.titulo {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.texto-titulo{
+    color:#337AB7;
+}
+
+.divisor-subtitulo {
+    margin-top: -5px;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.subtitulo{
+    margin-top:-10px;
+}
+
+.painel-custom {
+    background-color:rgb(241,243,244);
+    padding:24px;
+}
+
+monitor{
+
+}
+
+.linha-tabela-customizada {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(51,122,183,0.75), rgba(0, 0, 0, 0));
+}
+
+.linha-tabela {
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+.DataHoraConsulta {
+    font-family: 'Numans', sans-serif;
+    font-weight:bolder;
+    border: none;
+    background-color: rgb(241,243,244);
+    max-width: 125px;
+}
+.finalizado {
+    padding: 16px;
+    background-color: #ECA9A7;
+    color: #6C2927;
+}
+
+.andamento {    
+    padding: 16px;
+    background-color: #ADDBAD;
+    color: #2E5C2E;
+}
+
+.agendado {
+    padding: 16px;
+    background-color: #99BCDB;
+    color: #193D5B;
+}
+
+.lista-propriedades-monitor{
+    padding:16px;
+    background-color:rgb(233,235,236);    
+}
+
+.legenda-monitor {
+    margin-bottom:6px;
+}

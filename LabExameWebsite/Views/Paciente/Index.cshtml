@@ -1,0 +1,42 @@
+﻿@using X.PagedList.Mvc;
+@model X.PagedList.PagedList<LabExameWebsite.Models.Paciente>
+@{ViewBag.Title = "Lista de Pacientes";}
+
+<div class="titulo">
+    <h2 class="texto-titulo">PACIENTE</h2>
+    <hr class="divisor-subtitulo" />
+    <p class="subtitulo">Lista onde é possível ações para cada item. Abaixo cadastre um novo Paciente.</p>
+</div>
+
+<div class="painel-custom">
+    <div class="row lista-propriedades">
+        <div class="col-md-3"><b>Nome</b></div>
+        <div class="col-md-3"><b>CPF</b></div>
+        <div class="col-md-3"><b>E-mail</b></div>
+        <div class="col-md-3"><b>Ação</b></div>
+    </div>
+
+    <hr class="linha-tabela-customizada"/>
+
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-md-3"><b>@Html.DisplayFor(modelItem => item.NomePaciente)</b></div>
+            <div class="col-md-3"><b>@Html.DisplayFor(modelItem => item.CpfPaciente)</b></div>
+            <div class="col-md-3"><b>@Html.DisplayFor(modelItem => item.EmailPaciente)</b></div>
+            <div class="col-md-3">
+                <a href="@Url.Action("Edit", "Paciente", new { id = item.PacienteID })" class="btn btn-sm btn-success form-group"><i class="fa fa-check-square-o"></i> Editar</a>
+                <a href="@Url.Action("Details", "Paciente", new { id = item.PacienteID })" class="btn btn-sm btn-primary form-group"><i class="fa fa-info"></i> Detalhes</a>
+                <a href="@Url.Action("Delete", "Paciente", new { id = item.PacienteID })" class="btn btn-sm btn-danger  form-group"><i class="fa fa-trash"></i> Excluir</a>
+            </div>
+        </div>
+        <hr />
+    }
+
+    <div>
+        <a href="@Url.Action("Create", "Paciente")" class="btn btn-success form-group"><i class="fa fa-plus"></i> Cadastrar Novo</a>
+    </div>
+</div>
+<div class="row text-center">
+    @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>", MaximumPageNumbersToDisplay = 4 })
+</div>

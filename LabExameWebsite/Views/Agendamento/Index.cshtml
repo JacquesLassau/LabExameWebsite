@@ -1,0 +1,42 @@
+﻿@using X.PagedList.Mvc;
+@model X.PagedList.PagedList<LabExameWebsite.Models.Agendamento>
+@{ViewBag.Title = "Lista para Marcação de Exames";}
+
+<div class="titulo">
+    <h2 class="texto-titulo">MARCAÇÃO DE EXAMES</h2>
+    <hr class="divisor-subtitulo" />
+    <p class="subtitulo">Lista onde é possível ações para cada item. Abaixo veja as Marcações de Exames.</p>
+</div>
+
+<div class="painel-custom">
+    <div class="row lista-propriedades">
+        <div class="col-md-3"><b>Paciente</b></div>
+        <div class="col-md-3"><b>Exame</b></div>
+        <div class="col-md-3"><b>Data e Hora</b></div>
+        <div class="col-md-3"><b>Ação</b></div>
+    </div>
+
+    <hr class="linha-tabela-customizada"/>
+
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-md-3"><b>@Html.DisplayFor(modelItem => item.Paciente.NomePaciente)</b></div>
+            <div class="col-md-3"><b>@Html.DisplayFor(modelItem => item.Exame.NomeExame)</b></div>
+            <div class="col-md-3"><b>@Html.DisplayFor(modelItem => item.DataHoraAgendamento)</b></div>
+            <div class="col-md-3">
+                <a href="@Url.Action("Edit", "Agendamento", new { id = item.AgendamentoID })" class="btn btn-sm btn-success form-group"><i class="fa fa-check-square-o"></i> Editar</a>
+                <a href="@Url.Action("Details", "Agendamento", new { id = item.AgendamentoID })" class="btn btn-sm btn-primary form-group"><i class="fa fa-info"></i> Detalhes</a>
+                <a href="@Url.Action("Delete", "Agendamento", new { id = item.AgendamentoID })" class="btn btn-sm btn-danger  form-group"><i class="fa fa-trash"></i> Excluir</a>
+            </div>
+        </div>
+        <hr />
+    }
+
+    <div>
+        <a href="@Url.Action("Create", "Agendamento")" class="btn btn-success form-group"><i class="fa fa-plus"></i> Cadastrar Novo</a>      
+    </div>
+</div>
+<div class="row text-center">
+    @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>", MaximumPageNumbersToDisplay = 4 })
+</div>

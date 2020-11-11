@@ -1,0 +1,50 @@
+﻿@model LabExameWebsite.Models.ViewModel.ExameViewModel
+@{ViewBag.Title = "Excluir";}
+
+<div class="titulo">
+    <h2 class="texto-titulo">EXCLUIR</h2>
+    <hr class="divisor-subtitulo" />
+    <p class="subtitulo">Abaixo exclua o Exame.</p>
+</div>
+
+<div class="form-horizontal">    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ExameID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TipoExameID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.TipoExameID, Model.ListarTiposExamesViewModel, new { @class = "form-control", disabled = "disabled" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NomeExame, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NomeExame, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ObservacaoExame, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ObservacaoExame, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-danger btnsViewDelete"><i class="fa fa-trash"></i> Excluir</button>
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <a href="@Url.Action("Index", "Exame")" class="btn btn-default btnsViewDelete" style="margin-left:1px;"><i class="fa fa-reply"></i> Voltar</a>
+        </div>
+    </div>
+</div>

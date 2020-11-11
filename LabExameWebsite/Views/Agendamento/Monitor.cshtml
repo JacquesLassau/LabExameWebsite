@@ -1,0 +1,71 @@
+﻿@using X.PagedList.Mvc;
+@model X.PagedList.PagedList<LabExameWebsite.Models.Agendamento>
+@Scripts.Render("~/Scripts/Agedanmento/Monitor.js")
+@{ViewBag.Title = "Monitor de Agendamentos";}
+
+<div class="titulo">
+    <h2 class="texto-titulo">AGENDAMENTOS</h2>
+    <hr class="divisor-subtitulo" />
+    <p class="subtitulo">Verifique os agendamentos para Marcação de Exames no sistema.</p>
+</div>
+
+<div class="row legenda-monitor">
+    <div class="col-md-12">
+        <i class="fa fa-square" style="color:#99BCDB;"></i> Agendadas &nbsp;
+        <i class="fa fa-square" style="color:#ECA9A7;"></i> Finalizadas &nbsp;
+        <i class="fa fa-square" style="color:#ADDBAD;"></i> Do dia &nbsp;
+
+    </div>
+</div>
+
+<div class="monitor">
+    <div class="row lista-propriedades lista-propriedades-monitor">
+        <div class="col-md-2"><b>Agendamento Nº</b></div>
+        <div class="col-md-2"><b>Data e Hora</b></div>
+        <div class="col-md-4"><b>Paciente</b></div>
+        <div class="col-md-4"><b>Exame</b></div>
+    </div>
+    <hr class="linha-tabela" />
+    @foreach (var item in Model)
+    {
+        int anoAgendamento = item.DataHoraAgendamento.Year;
+        int mesAgendamento = item.DataHoraAgendamento.Month;
+        int diaAgendamento = item.DataHoraAgendamento.Day;
+
+        DateTime agendamentoAgendamento = new DateTime(anoAgendamento, mesAgendamento, diaAgendamento);
+
+        if (agendamentoAgendamento.Year == DateTime.UtcNow.Year && agendamentoAgendamento.Month == DateTime.UtcNow.Month && agendamentoAgendamento.Day == DateTime.UtcNow.Day)
+        {
+            <div class="row andamento">
+                <div class="col-md-2"><b>@Html.DisplayFor(modelItem => item.AgendamentoID)</b></div>
+                <div class="col-md-2"><b>@Html.DisplayFor(modelItem => item.DataHoraAgendamento)</b></div>
+                <div class="col-md-4"><b>@Html.DisplayFor(modelItem => item.Paciente.NomePaciente)</b></div>
+                <div class="col-md-4"><b>@Html.DisplayFor(modelItem => item.Exame.NomeExame)</b></div>
+            </div>
+        }
+        else if (agendamentoAgendamento < DateTime.UtcNow)
+        {
+            <div class="row finalizado">
+                <div class="col-md-2"><b>@Html.DisplayFor(modelItem => item.AgendamentoID)</b></div>
+                <div class="col-md-2"><b>@Html.DisplayFor(modelItem => item.DataHoraAgendamento)</b></div>
+                <div class="col-md-4"><b>@Html.DisplayFor(modelItem => item.Paciente.NomePaciente)</b></div>
+                <div class="col-md-4"><b>@Html.DisplayFor(modelItem => item.Exame.NomeExame)</b></div>
+            </div>
+        }
+        else if (agendamentoAgendamento > DateTime.UtcNow)
+        {
+            <div class="row agendado">
+                <div class="col-md-2"><b>@Html.DisplayFor(modelItem => item.AgendamentoID)</b></div>
+                <div class="col-md-2"><b>@Html.DisplayFor(modelItem => item.DataHoraAgendamento)</b></div>
+                <div class="col-md-4"><b>@Html.DisplayFor(modelItem => item.Paciente.NomePaciente)</b></div>
+                <div class="col-md-4"><b>@Html.DisplayFor(modelItem => item.Exame.NomeExame)</b></div>
+            </div>
+        }
+        <hr class="linha-tabela" />
+    }
+
+</div>
+
+<div class="row text-center">
+    @Html.PagedListPager(Model, pagina => Url.Action("Monitor", new { pagina }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "<", LinkToNextPageFormat = ">", LinkToLastPageFormat = ">>", MaximumPageNumbersToDisplay = 4 })
+</div>

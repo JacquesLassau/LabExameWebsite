@@ -1,0 +1,113 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Bibliotecas Importadas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+
+        .form-login {
+            margin-top: 50%;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        @@media screen and (min-width: 1024px) {
+            body {
+                background-image: url("../../images/fundo.png");
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            .titulo {
+                position: absolute;
+                margin-top: 15%;
+            }
+        }
+
+        @@media screen and (min-width: 768px) and (max-width:1023px) {
+            body {
+                background-image: none;
+                margin-left: 32%;
+            }          
+
+            .titulo {
+                position: absolute;
+                margin-top: -20%;
+            }
+        }
+
+        @@media screen and (max-width:767px) {
+            body {
+                background-image: none;
+                margin-left: 11%;
+            }
+            .titulo {
+                margin-bottom: -40%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+            <div class="titulo">
+                <h2 class="texto-titulo">Bem Vindo</h2>
+                <hr class="divisor-subtitulo" />
+                <p class="subtitulo">Insira suas credenciais para o acesso.</p>
+            </div>
+            <form action="/action_page.php" class="form-login">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" id="EmailUsuario">
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Senha</label>
+                    <input type="password" class="form-control" id="SenhaUsuario">
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="LembrarSe"> Lembre-me</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-default">Entrar</button>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-danger">Acessar com Google</button>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Acessar com Facebook</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!--Atribuição de direitos autorais -->
+    <!--a href='https://br.freepik.com/fotos/pessoas'>Pessoas foto criado por jcomp - br.freepik.com</a-->
+</body>
+</html>

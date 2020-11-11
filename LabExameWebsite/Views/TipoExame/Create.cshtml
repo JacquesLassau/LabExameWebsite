@@ -1,0 +1,42 @@
+﻿@model LabExameWebsite.Models.TipoExame
+@{ViewBag.Title = "Cadastrar";}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="titulo">
+        <h2 class="texto-titulo">CADASTRAR</h2>
+        <hr class="divisor-subtitulo" />
+        <p class="subtitulo">Abaixo cadastre um novo Tipo de Exame.</p>
+    </div>
+    <div class="form-horizontal">        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.NomeTipoExame, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NomeTipoExame, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NomeTipoExame, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DescricaoTipoExame, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DescricaoTipoExame, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DescricaoTipoExame, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Salvar</button>
+                <button type="reset" class="btn btn-danger"><i class="fa fa-remove"></i> Cancelar</button>
+                <a href="@Url.Action("Index", "TipoExame")" class="btn btn-primary form-group" style="margin-left:1px;"><i class="fa fa-reply"></i> Voltar</a>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

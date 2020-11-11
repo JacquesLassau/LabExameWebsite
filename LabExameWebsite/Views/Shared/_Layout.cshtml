@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - LabExameWebsite</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- Bibliotecas Importadas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        /* Classes modificadas responsivamente */
+
+        @@media screen and (min-width: 1024px) {
+            .link-sair {
+                float: right;
+            }
+
+            .lista-propriedades {
+                color: #337AB7;
+                margin-top: 1%;
+                margin-bottom: 1%;
+                text-transform: uppercase;
+            }
+
+            .lista-propriedades-monitor {
+                color: #337AB7;                
+                margin-bottom: 0px;
+                text-transform: uppercase;
+            }
+        }
+
+        @@media screen and (min-width: 768px) and (max-width:1023px) {
+            .link-sair {
+                float: right;
+            }
+
+            .lista-propriedades {
+                visibility: hidden;
+                display: none;
+            }
+
+            .lista-propriedades-monitor {
+                visibility: hidden;
+                display: none;
+            }
+        }
+
+        @@media screen and (max-width:767px) {
+            .link-sair {
+                float: left;
+                border-top: 1px solid #000;
+                width: 100%;
+                position: absolute;
+                background-color: #337AB7;
+                margin-top: -2px;
+            }
+
+            .lista-propriedades {
+                visibility: hidden;
+                display: none;
+            }
+
+            .linha-tabela-customizada {
+                visibility: hidden;
+                display: none;
+            }
+
+            .lista-propriedades-monitor {
+                visibility: hidden;
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i>  Início</a></li>
+                    <li><a href="@Url.Action("Index", "Paciente")"><i class="fa fa-address-book"></i>  Pacientes</a></li>
+                    <li><a href="@Url.Action("Index", "TipoExame")"><i class="fa fa-medkit"></i>  Tipos de Exames</a></li>
+                    <li><a href="@Url.Action("Index", "Exame")"><i class="fa fa-tint"></i>  Exames</a></li>
+                    <li><a href="@Url.Action("Index", "Agendamento")"><i class="fa fa-user-md"></i>  Marcação de Exames</a></li>
+                    <li><a href="@Url.Action("Monitor", "Agendamento")"><i class="	fa fa-calendar"></i>  Agendamentos</a></li>
+                </ul>
+                <ul class="nav navbar-nav link-sair">
+                    <li><a href="@Url.Action("Logout","AreaRestrita")"><i class="fa fa-external-link"></i> Sair </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+
+        @RenderBody()
+
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - LabExameWebsite</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    @if (TempData != null && TempData.ContainsKey(Constantes.MensagemAlerta))
+    {
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    alert("@Html.Raw(HttpUtility.JavaScriptStringEncode(TempData[Constantes.MensagemAlerta].ToString()))");
+                });
+        </script>
+    }
+
+</body>
+</html>

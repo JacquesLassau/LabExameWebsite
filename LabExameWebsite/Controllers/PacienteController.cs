@@ -1,10 +1,20 @@
-﻿using System.Linq;
+﻿/*
+ * 
+ * Analista: Jacques de Lassau
+ * Data: 04/08/2022 23:17h
+ * Modificações: Modificados textos dispersos em variáveis constanntes;
+ * Ajustes de variáveis do tipo "var" para seus tipos originais.
+ * 
+ */
+
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Data.Entity;
 using LabExameWebsite.Models;
-using LabExameWebsite.BLL;
 using X.PagedList;
+using LabExameWebsite.Infrastructure;
+using System;
 
 namespace LabExameWebsite.Controllers
 {
@@ -15,8 +25,7 @@ namespace LabExameWebsite.Controllers
         [HttpGet]
         public ActionResult Index(int pagina = 1)
         {
-            var pacientes = db.Pacientes.ToList().ToPagedList(pagina, 5);
-            return View(pacientes);
+            return View(db.Pacientes.ToList().ToPagedList(pagina, 5));
         }
 
         [HttpGet]
@@ -41,24 +50,23 @@ namespace LabExameWebsite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Paciente paciente)
+        public ActionResult Create(Paciente pPaciente)
         {
-            PacienteValido pacienteValido = new PacienteValido();
-            if (!pacienteValido.CpfPacienteValido(paciente.CpfPaciente))
+            try
             {
-                TempData[Constantes.MensagemAlerta] = "O CPF digitado é inválido ou não existe.";
-            }
-            else
-            {
-                var resultCpfExistente = db.Pacientes.FirstOrDefault(p => p.CpfPaciente == paciente.CpfPaciente);
-
-                if (resultCpfExistente != null)
+                if (!Uteis.CpfPacienteValido(pPaciente.CpfPaciente))
                 {
-                    TempData[Constantes.MensagemAlerta] = "O CPF digitado está vinculado a outro paciente.";
+                    TempData[Constantes.MensagemAlerta] = Constantes.CpfInvalido;
                 }
                 else
                 {
-                    if (ModelState.IsValid)
+                    Paciente paciente = db.Pacientes.FirstOrDefault(p => p.CpfPaciente == pPaciente.CpfPaciente);
+
+                    if (paciente != null && !string.IsNullOrWhiteSpace(paciente.CpfPaciente))
+                    {
+                        TempData[Constantes.MensagemAlerta] = Constantes.CpfExiste;
+                    }
+                    else if (ModelState.IsValid)
                     {
                         db.Pacientes.Add(paciente);
                         db.SaveChanges();
@@ -66,9 +74,13 @@ namespace LabExameWebsite.Controllers
                         return RedirectToAction("Index");
                     }
                 }
+                return View(pPaciente);
             }
-
-            return View(paciente);
+            catch (Exception ex)
+            {
+                TempData[Constantes.MensagemAlerta] = string.Format(Constantes.MensagemErro, ex.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
@@ -87,34 +99,37 @@ namespace LabExameWebsite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Paciente paciente)
+        public ActionResult Edit(Paciente pPaciente)
         {
-            PacienteValido pacienteValido = new PacienteValido();
-            if (!pacienteValido.CpfPacienteValido(paciente.CpfPaciente))
+            try
             {
-                TempData[Constantes.MensagemAlerta] = "O CPF digitado é inválido ou não existe.";
-            }
-            else
-            {
-                var resultCpfExistente = db.Pacientes.FirstOrDefault(p => p.CpfPaciente == paciente.CpfPaciente && p.PacienteID != paciente.PacienteID);
-
-                if (resultCpfExistente != null)
+                if (!Uteis.CpfPacienteValido(pPaciente.CpfPaciente))
                 {
-                    TempData[Constantes.MensagemAlerta] = "O CPF digitado está vinculado a outro paciente.";
+                    TempData[Constantes.MensagemAlerta] = Constantes.CpfInvalido;
                 }
                 else
                 {
-                    if (ModelState.IsValid)
+                    Paciente paciente = db.Pacientes.FirstOrDefault(p => p.CpfPaciente == pPaciente.CpfPaciente);
+
+                    if (paciente != null && !string.IsNullOrWhiteSpace(paciente.CpfPaciente))
+                    {
+                        TempData[Constantes.MensagemAlerta] = Constantes.CpfExiste;
+                    }
+                    else if (ModelState.IsValid)
                     {
                         db.Entry(paciente).State = EntityState.Modified;
                         db.SaveChanges();
                         db.Dispose();
                         return RedirectToAction("Index");
                     }
-                }                
+                }
+                return View(pPaciente);
             }
-
-            return View(paciente);
+            catch (Exception ex)
+            {
+                TempData[Constantes.MensagemAlerta] = string.Format(Constantes.MensagemErro, ex.Message);
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
@@ -135,10 +150,13 @@ namespace LabExameWebsite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Paciente paciente = db.Pacientes.Find(id);
-            db.Pacientes.Remove(paciente);
-            db.SaveChanges();
-            db.Dispose();
+            if (id > 0)
+            {
+                Paciente paciente = db.Pacientes.Find(id);
+                db.Pacientes.Remove(paciente);
+                db.SaveChanges();
+                db.Dispose();
+            }
             return RedirectToAction("Index");
         }
 

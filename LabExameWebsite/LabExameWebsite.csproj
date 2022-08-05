@@ -132,7 +132,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="BLL\PacienteValido.cs" />
     <Compile Include="Controllers\AgendamentoController.cs" />
     <Compile Include="Controllers\AreaRestritaController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -145,6 +144,7 @@
     </Compile>
     <Compile Include="Infrastructure\Constantes.cs" />
     <Compile Include="Infrastructure\JsonResultCustomizado.cs" />
+    <Compile Include="Infrastructure\Uteis.cs" />
     <Compile Include="Migrations\202011081457208_ConstrucaoDMLInicialLabExame.cs" />
     <Compile Include="Migrations\202011081457208_ConstrucaoDMLInicialLabExame.designer.cs">
       <DependentUpon>202011081457208_ConstrucaoDMLInicialLabExame.cs</DependentUpon>

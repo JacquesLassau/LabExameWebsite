@@ -1,8 +1,16 @@
-﻿namespace LabExameWebsite.BLL
+﻿/*
+ * 
+ * Analista: Jacques de Lassau
+ * Data: 04/08/2022 23:23h
+ * Modificações: Incluído método que valida CPF em nova classe
+ * 
+ */
+
+namespace LabExameWebsite.Infrastructure
 {
-    public class PacienteValido
+    public static class Uteis
     {
-        public bool CpfPacienteValido(string cpf)
+        public static bool CpfPacienteValido(string cpf)
         {
             string valor = cpf.Replace(".", "");
             valor = valor.Replace("-", "");

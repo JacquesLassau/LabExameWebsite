@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * 
+ * Analista: Jacques de Lassau
+ * Data: 04/08/2022 23:15h
+ * Modificações: Modificadas variáveis do tipo "var" para seus tipos originais; 
+ * centralizado na função "CarregarTiposDeExame" valores dos combos para tipo de exame
+ * 
+ */
+
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -15,8 +25,7 @@ namespace LabExameWebsite.Controllers
 
         public ActionResult Index(int pagina = 1)
         {
-            var exames = db.Exames.ToList().ToPagedList(pagina, 5);
-            return View(exames);
+            return View(db.Exames.ToList().ToPagedList(pagina, 5));
         }
 
         [HttpGet]
@@ -25,27 +34,10 @@ namespace LabExameWebsite.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Exame exame = db.Exames.Find(id);
+            ExameViewModel tipoExameViewModel = CarregarTiposDeExame(false, false, id.Value);
 
-            if (exame == null)
+            if (tipoExameViewModel == null)
                 return HttpNotFound();
-
-            ExameViewModel tipoExameViewModel = new ExameViewModel();
-            var tipoExames = db.TiposExames.ToList();
-
-            foreach (var item in tipoExames)
-            {
-                tipoExameViewModel.ListarTiposExamesViewModel.Add(new SelectListItem()
-                {
-                    Text = Convert.ToString(item.TipoExameID) + " - " + item.NomeTipoExame,
-                    Value = Convert.ToString(item.TipoExameID),
-                });
-            }
-
-            tipoExameViewModel.ExameID = exame.ExameID;
-            tipoExameViewModel.TipoExameID = exame.TipoExameID;
-            tipoExameViewModel.NomeExame = exame.NomeExame;
-            tipoExameViewModel.ObservacaoExame = exame.ObservacaoExame;
 
             return View(tipoExameViewModel);
         }
@@ -53,18 +45,10 @@ namespace LabExameWebsite.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            ExameViewModel tipoExameViewModel = new ExameViewModel();
-            var tipoExames = db.TiposExames.ToList();
+            ExameViewModel tipoExameViewModel = CarregarTiposDeExame(true, true);
 
-            foreach (var item in tipoExames)
-            {
-                tipoExameViewModel.ListarTiposExamesViewModel.Add(new SelectListItem()
-                {
-                    Text = Convert.ToString(item.TipoExameID) + " - " + item.NomeTipoExame,
-                    Value = Convert.ToString(item.TipoExameID),
-                    Selected = true
-                });
-            }
+            if (tipoExameViewModel == null)
+                return HttpNotFound();
 
             return View(tipoExameViewModel);
         }
@@ -92,25 +76,10 @@ namespace LabExameWebsite.Controllers
 
             Exame exame = db.Exames.Find(id);
 
-            if (exame == null)
+            ExameViewModel tipoExameViewModel = CarregarTiposDeExame(false, false, id.Value);
+
+            if (tipoExameViewModel == null)
                 return HttpNotFound();
-
-            ExameViewModel tipoExameViewModel = new ExameViewModel();
-            var tipoExames = db.TiposExames.ToList();
-
-            foreach (var item in tipoExames)
-            {
-                tipoExameViewModel.ListarTiposExamesViewModel.Add(new SelectListItem()
-                {
-                    Text = Convert.ToString(item.TipoExameID) + " - " + item.NomeTipoExame,
-                    Value = Convert.ToString(item.TipoExameID),                    
-                });
-            }
-
-            tipoExameViewModel.ExameID = exame.ExameID;
-            tipoExameViewModel.TipoExameID = exame.TipoExameID;
-            tipoExameViewModel.NomeExame = exame.NomeExame;
-            tipoExameViewModel.ObservacaoExame = exame.ObservacaoExame;
 
             return View(tipoExameViewModel);
         }
@@ -135,27 +104,10 @@ namespace LabExameWebsite.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            Exame exame = db.Exames.Find(id);
+            ExameViewModel tipoExameViewModel = CarregarTiposDeExame(false, false, id.Value);
 
-            if (exame == null)
+            if (tipoExameViewModel == null)
                 return HttpNotFound();
-
-            ExameViewModel tipoExameViewModel = new ExameViewModel();
-            var tipoExames = db.TiposExames.ToList();
-
-            foreach (var item in tipoExames)
-            {
-                tipoExameViewModel.ListarTiposExamesViewModel.Add(new SelectListItem()
-                {
-                    Text = Convert.ToString(item.TipoExameID) + " - " + item.NomeTipoExame,
-                    Value = Convert.ToString(item.TipoExameID),
-                });
-            }
-
-            tipoExameViewModel.ExameID = exame.ExameID;
-            tipoExameViewModel.TipoExameID = exame.TipoExameID;
-            tipoExameViewModel.NomeExame = exame.NomeExame;
-            tipoExameViewModel.ObservacaoExame = exame.ObservacaoExame;
 
             return View(tipoExameViewModel);
         }
@@ -169,6 +121,39 @@ namespace LabExameWebsite.Controllers
             db.SaveChanges();
             db.Dispose();
             return RedirectToAction("Index");
+        }
+
+        private ExameViewModel CarregarTiposDeExame(bool pPaginaCreate, bool pOpcaoSelecionada, int? pId = null)
+        {
+            Exame exame = db.Exames.Find(pId);
+            if (exame != null || pPaginaCreate)
+            {
+                ExameViewModel tipoExameViewModel = new ExameViewModel();
+                List<TipoExame> tipoExames = db.TiposExames.ToList();
+
+                foreach (TipoExame item in tipoExames)
+                {
+                    tipoExameViewModel.ListarTiposExamesViewModel.Add(new SelectListItem()
+                    {
+                        Text = string.Concat(Convert.ToString(item.TipoExameID), " - ", item.NomeTipoExame),
+                        Value = Convert.ToString(item.TipoExameID),
+                        Selected = pOpcaoSelecionada
+                    });
+                }
+
+                if (!pPaginaCreate)
+                {
+                    tipoExameViewModel.ExameID = exame.ExameID;
+                    tipoExameViewModel.TipoExameID = exame.TipoExameID;
+                    tipoExameViewModel.NomeExame = exame.NomeExame;
+                    tipoExameViewModel.ObservacaoExame = exame.ObservacaoExame;
+                }
+
+                return tipoExameViewModel;
+            }
+            else
+                return null;
+
         }
 
         protected override void Dispose(bool disposing)

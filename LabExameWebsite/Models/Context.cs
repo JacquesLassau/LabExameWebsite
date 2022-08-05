@@ -1,10 +1,18 @@
-﻿using System.Data.Entity;
+﻿/*
+ * 
+ * Analista: Jacques de Lassau
+ * Data: 04/08/2022 23:24h
+ * Modificações: Alterado servidor dentro da string de conexão
+ * 
+ */
+
+using System.Data.Entity;
 
 namespace LabExameWebsite.Models
 {
     public class Context: DbContext
-    {
-        public Context() : base("Server=DESKTOP-1T99VF9;Database=DbLabExame;User Id=sa;Password=123@qwe;") { }
+    {        
+        public Context() : base("Server=DESKTOP-VOBUIHK;Database=DbLabExame;User Id=sa;Password=123@qwe;") { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

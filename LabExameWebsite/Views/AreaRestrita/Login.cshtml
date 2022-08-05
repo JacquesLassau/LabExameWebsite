@@ -67,18 +67,15 @@
         <div class="col-md-3"></div>
         <div class="col-md-3">
             <div class="titulo">
-                <h2 class="texto-titulo">Bem Vindo - LabExamesWeb</h2>
-                <hr class="divisor-subtitulo" />
-                <p class="subtitulo">Insira suas credenciais para o acesso.</p>
+                <h2 class="texto-titulo">Bem Vindo <br/> LabExamesWeb</h2>
+                <hr class="divisor-subtitulo" />                
             </div>
-            <form action="/action_page.php" class="form-login">
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" class="form-control" id="EmailUsuario">
+            <form action="@Url.Action("Index","Home")" method="get" class="form-login">
+                <div class="form-group">                    
+                    <input type="email" class="form-control" id="EmailUsuario" placeholder="Digite seu e-mail">
                 </div>
-                <div class="form-group">
-                    <label for="pwd">Senha</label>
-                    <input type="password" class="form-control" id="SenhaUsuario">
+                <div class="form-group">                    
+                    <input type="password" class="form-control" id="SenhaUsuario" placeholder="Digite sua senha">
                 </div>
                 <div class="form-group">
                     <div class="checkbox">

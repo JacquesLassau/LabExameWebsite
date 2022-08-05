@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * 
+ * Analista: Jacques de Lassau
+ * Data: 04/08/2022 23:19h
+ * Modificações: Renomeados objetos de parâmetros de entrada para que sejam identificados como parâmetros dentro das actions;
+ * 
+ */
+
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -22,7 +29,7 @@ namespace LabExameWebsite.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);            
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             TipoExame tipoExame = db.TiposExames.Find(id);
 
@@ -40,17 +47,17 @@ namespace LabExameWebsite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TipoExame tipoExame)
+        public ActionResult Create(TipoExame pTipoExame)
         {
             if (ModelState.IsValid)
             {
-                db.TiposExames.Add(tipoExame);
+                db.TiposExames.Add(pTipoExame);
                 db.SaveChanges();
                 db.Dispose();
                 return RedirectToAction("Index");
             }
 
-            return View(tipoExame);
+            return View(pTipoExame);
         }
 
         [HttpGet]
@@ -69,16 +76,16 @@ namespace LabExameWebsite.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TipoExame tipoExame)
+        public ActionResult Edit(TipoExame pTipoExame)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tipoExame).State = EntityState.Modified;
+                db.Entry(pTipoExame).State = EntityState.Modified;
                 db.SaveChanges();
                 db.Dispose();
                 return RedirectToAction("Index");
             }
-            return View(tipoExame);
+            return View(pTipoExame);
         }
 
         [HttpGet]
